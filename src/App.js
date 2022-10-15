@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import SingleToDo from "./SingleToDo";
 
-function App() {
+const dummyItems = [
+  { id: 1, toDoName: "clean house", completed: "false" },
+  { id: 2, toDoName: "feed baby", completed: "false" },
+  { id: 3, toDoName: "code some react", completed: "false" },
+];
+
+//make an array that filters completed items, get the length & return it in the complete button
+const done = dummyItems.filter((item) => item.completed === "true");
+//make an array that filters incomplete items, get the length & return it in the complete button
+const incomplete = dummyItems.filter((item) => item.completed === "false");
+
+function App({ key }) {
+  const [items, setItem] = useState(dummyItems); // -> [thing, setThing]
+  const [completed, setStatus] = useState(false); // -> [thing, setThing]
+
+  const toggleCompleted = (item) => {
+    setStatus((completed) => !completed);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To Do List:</h1>
+      <div id="container">
+        {
+          <SingleToDo
+            items={items}
+            completed={completed}
+            onClick={toggleCompleted}
+          />
+        }
+      </div>
+      <button>Complete ({done.length})</button>
+      <button>Incomplete ({incomplete.length})</button>
+      <button>Add new item</button>
     </div>
   );
 }
