@@ -1,53 +1,77 @@
-import React from "react";
-import PropTypes from "prop-types"
+import React, { useState } from "react";
+//completed task strike
+const crossOut = {textDecoration: 'line-through'}
 
-const SingleToDo = (props) => {
-    const toDoStyles = {
-        backgroundColor: 'aliceBlue',
-        border: '5px solid cornSilk',
-        textDecoration: 'none'
-    }
 
-    const changeStatus = () => {
-        console.log('hello')
-        //how to change the status on the item when clicked 
-        // if (props.items.id === )
-        // let currentProp = props.items
-    }
+const SingleToDo = ({ toDoName, selectedFilter }) => {
 
-    const ToDo = (props) => {
-        return <p>{props.toDoName}</p>
-    }
+    //second arg is a func that alters useState
+    //value prop = will be unchecked(false) by default, but set to true when checked
+    const [completed, setCompleted] = useState(false); // -> [thing, setThing]
 
-    //when the input checkbox is clicked, the item is crossed out
-    const handleClick = (event) => {
-        const itemStyle = event.target.parentElement.style
-        itemStyle.textDecoration ? itemStyle.removeProperty('text-decoration') : itemStyle.setProperty('text-decoration', 'line-through');
-        //how can i also make the specific item's status change in the same on
-        changeStatus();
-    }
+    //toggling the value of completed thru useState
+    const toggleCompleted = () => {
+        setCompleted(!completed);
+      };
 
-  return (
-    <div>
-        {props.items.map((item) => {
-          return (
-           <div style={toDoStyles}>
-                <p key={item.id} >
-                    <input type="checkbox" onClick={handleClick}></input>
-                    {item.toDoName} Status: {item.completed}
-                </p>
-                {/* <ToDo toDoName="clean car"/> */}
+      //if 'active' button is selected, completed items will not show, incomplete ones WILL
+      if (selectedFilter === 'active') {
+          return completed ? null : (
+            <div>
+               <input 
+               type="checkbox"
+               onClick={toggleCompleted}
+               value={completed}
+               selectedFilter={selectedFilter} >
+               </input>
+            <p style={completed ? crossOut : null}>{toDoName}</p>
             </div>
           );
-        })}
-    </div>
-  );
+    
+    //if 'completed' button is selected, completed items WILL render, incomplete ones will return empty string
+      } else if (selectedFilter === 'completed') {
+        return completed ? (
+            <div>
+               <input 
+               type="checkbox"
+               onClick={toggleCompleted}
+               value={completed}
+               selectedFilter={selectedFilter} 
+               checked>
+               </input>
+            <p style={completed ? crossOut : null}>{toDoName}</p>
+            </div>
+          ) : null;
+      } else {
+        //otherwise, return all items. if completed make sure they stay crossed out AND checked
+        return completed ? (
+            <div>
+               <input 
+               type="checkbox"
+               onClick={toggleCompleted}
+               value={completed}
+               selectedFilter={selectedFilter} 
+               checked>
+               </input>
+            <p style={completed ? crossOut : null}>{toDoName}</p>
+            </div>
+          ) : (
+            <div>
+               <input 
+               type="checkbox"
+               onClick={toggleCompleted}
+               value={completed}
+               selectedFilter={selectedFilter} >
+               </input>
+            <p style={completed ? crossOut : null}>{toDoName}</p>
+            </div>
+          ) 
+      }
+
+
 };
 
-SingleToDo.propTypes = {
-    status: PropTypes.bool,
-    setStatus: PropTypes.func
-}
+
 
 
 export default SingleToDo;
