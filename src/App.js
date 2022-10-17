@@ -1,40 +1,37 @@
 import React, { useState } from "react";
 import SingleToDo from "./SingleToDo";
+import Filter from "./Filter";
+import "./App.css";
 
-const dummyItems = [
-  { id: 1, toDoName: "clean house", completed: "false" },
-  { id: 2, toDoName: "feed baby", completed: "false" },
-  { id: 3, toDoName: "code some react", completed: "false" },
-];
+const dummyItems = ["walk karat", "feed baby", "code"];
 
-//make an array that filters completed items, get the length & return it in the complete button
-const done = dummyItems.filter((item) => item.completed === "true");
-//make an array that filters incomplete items, get the length & return it in the complete button
-const incomplete = dummyItems.filter((item) => item.completed === "false");
+//this is the parent/main component where states live
+function App() {
+  const [toDos] = useState(dummyItems);
+  const [selectedFilter, setFilter] = useState("all"); // //'all' is the default value for selected filter
 
-function App({ key }) {
-  const [items, setItem] = useState(dummyItems); // -> [thing, setThing]
-  const [completed, setStatus] = useState(false); // -> [thing, setThing]
-
-  const toggleCompleted = (item) => {
-    setStatus((completed) => !completed);
-  };
+  // state is handled in the component and can update it inside component.
+  // when you change the state inside your app, itll re-render that section of the app
+  // props are handled outside of component, must be updated outside component
 
   return (
     <div className="App">
       <h1>To Do List:</h1>
-      <div id="container">
-        {
-          <SingleToDo
-            items={items}
-            completed={completed}
-            onClick={toggleCompleted}
-          />
-        }
+      <div className="container">
+        <div id="list">
+          {toDos.map((toDoName) => (
+            <SingleToDo
+              key={toDoName}
+              toDoName={toDoName}
+              selectedFilter={selectedFilter}
+            />
+          ))}
+        </div>
       </div>
-      <button>Complete ({done.length})</button>
-      <button>Incomplete ({incomplete.length})</button>
-      <button>Add new item</button>
+      <input type="text" placeholder="add new todo"></input>{" "}
+      <input id="submitBtn" type="submit" value="add"></input>
+      <br></br>
+      <Filter selectedFilter={selectedFilter} setFilter={setFilter} />
     </div>
   );
 }
