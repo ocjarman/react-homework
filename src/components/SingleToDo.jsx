@@ -30,7 +30,8 @@ const [completed, setCompleted] = useState(false); // -> [thing, setThing]
                value={completed}
                filter={filter} >
                </input>
-            <p style={completed ? crossOut : null}>{toDoName}</p>
+            <p style={completed ? crossOut : null}>{toDoName}</p><button>X</button>
+
             </div>
           );
     
@@ -45,7 +46,7 @@ const [completed, setCompleted] = useState(false); // -> [thing, setThing]
                filter={filter} 
                checked>
                </input>
-            {completed && <p style={crossOut}>{toDoName}</p>}            
+            {completed && <p style={crossOut}>{toDoName}</p>}<button>X</button>        
             </div>
           ) : null;
       } else {
@@ -59,7 +60,7 @@ const [completed, setCompleted] = useState(false); // -> [thing, setThing]
                filter={filter} 
                checked>
                </input>
-            {completed && <p style={crossOut}>{toDoName}</p>}            
+            {completed && <p style={crossOut}>{toDoName}</p>}<button>X</button>           
             </div>
           ) : (
             <div>
@@ -69,7 +70,7 @@ const [completed, setCompleted] = useState(false); // -> [thing, setThing]
                value={completed}
                filter={filter} >
                </input>
-            <p style={completed ? crossOut : null}>{toDoName}</p>
+            <p style={completed ? crossOut : null}>{toDoName}</p><button>X</button>
             </div>
           ) 
       }

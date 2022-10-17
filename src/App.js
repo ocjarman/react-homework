@@ -14,14 +14,14 @@ function App() {
   // when you change the state inside your app, itll re-render that section of the app
   // props are handled outside of component, must be updated outside component
   const handleChange = (event) => {
+    //need a state to hold a new value from our input in the 'newTask' state
     setNewTask(event.target.value);
   };
 
   const addTask = () => {
     //make an array composed of everything in original list, plus new added tasks
-    const newToDoList = [...toDoItems, newTask];
     //set original list to the new list!
-    setToDoItems(newToDoList);
+    setToDoItems([...toDoItems, newTask]);
   };
 
   return (
