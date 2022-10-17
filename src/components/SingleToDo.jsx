@@ -1,45 +1,51 @@
 import React, { useState } from "react";
-//completed task strike
+
+//completed task strike style
+
 const crossOut = {textDecoration: 'line-through'}
 
 
-const SingleToDo = ({ toDoName, selectedFilter }) => {
+export const SingleToDo = ({ toDoName, filter }) => {
 
-    //second arg is a func that alters useState
-    //value prop = will be unchecked(false) by default, but set to true when checked
-    const [completed, setCompleted] = useState(false); // -> [thing, setThing]
+//second arg is a func that alters useState
+//value prop = will be unchecked(false) by default, but set to true when checked
+  
+const [completed, setCompleted] = useState(false); // -> [thing, setThing]
 
-    //toggling the value of completed thru useState
+//--------------------toggling the value of 'completed' thru useState--------------
+
     const toggleCompleted = () => {
         setCompleted(!completed);
       };
 
+//--------------------SHOWING ITEMS BASED ON FILTER SELECTED//--------------------
+
       //if 'active' button is selected, completed items will not show, incomplete ones WILL
-      if (selectedFilter === 'active') {
+      if (filter === 'active') {
           return completed ? null : (
             <div>
                <input 
                type="checkbox"
                onClick={toggleCompleted}
                value={completed}
-               selectedFilter={selectedFilter} >
+               filter={filter} >
                </input>
             <p style={completed ? crossOut : null}>{toDoName}</p>
             </div>
           );
     
     //if 'completed' button is selected, completed items WILL render, incomplete ones will return empty string
-      } else if (selectedFilter === 'completed') {
+      } else if (filter === 'completed') {
         return completed ? (
             <div>
                <input 
                type="checkbox"
                onClick={toggleCompleted}
                value={completed}
-               selectedFilter={selectedFilter} 
+               filter={filter} 
                checked>
                </input>
-            <p style={completed ? crossOut : null}>{toDoName}</p>
+            {completed && <p style={crossOut}>{toDoName}</p>}            
             </div>
           ) : null;
       } else {
@@ -50,10 +56,10 @@ const SingleToDo = ({ toDoName, selectedFilter }) => {
                type="checkbox"
                onClick={toggleCompleted}
                value={completed}
-               selectedFilter={selectedFilter} 
+               filter={filter} 
                checked>
                </input>
-            <p style={completed ? crossOut : null}>{toDoName}</p>
+            {completed && <p style={crossOut}>{toDoName}</p>}            
             </div>
           ) : (
             <div>
@@ -61,17 +67,13 @@ const SingleToDo = ({ toDoName, selectedFilter }) => {
                type="checkbox"
                onClick={toggleCompleted}
                value={completed}
-               selectedFilter={selectedFilter} >
+               filter={filter} >
                </input>
             <p style={completed ? crossOut : null}>{toDoName}</p>
             </div>
           ) 
       }
-
-
 };
 
 
 
-
-export default SingleToDo;

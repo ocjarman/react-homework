@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import SingleToDo from "./SingleToDo";
-import Filter from "./Filter";
+import { SingleToDo } from "./components/SingleToDo";
+import { Filter } from "./components/Filter";
 import "./App.css";
 
-const dummyItems = ["walk karat", "feed baby", "code"];
+const dummyItems = ["drink a lot of coffee", "walk Karat", "feed Dean", "code"];
 
 //this is the parent/main component where states live
 function App() {
-  const [toDos] = useState(dummyItems);
-  const [selectedFilter, setFilter] = useState("all"); // //'all' is the default value for selected filter
+  const [toDoItems] = useState(dummyItems);
+  const [filter, setFilter] = useState("all"); // //'all' is the default value for selected filter
 
   // state is handled in the component and can update it inside component.
   // when you change the state inside your app, itll re-render that section of the app
@@ -16,22 +16,19 @@ function App() {
 
   return (
     <div className="App">
-      <h1>To Do List:</h1>
+      <h1>To Dos:</h1>
       <div className="container">
         <div id="list">
-          {toDos.map((toDoName) => (
-            <SingleToDo
-              key={toDoName}
-              toDoName={toDoName}
-              selectedFilter={selectedFilter}
-            />
-          ))}
+          {toDoItems.map((item) => {
+            return <SingleToDo key={item} toDoName={item} filter={filter} />;
+          })}
         </div>
       </div>
-      <input type="text" placeholder="add new todo"></input>{" "}
-      <input id="submitBtn" type="submit" value="add"></input>
+      {/*---------------form just for show --------*/}
+      <input type="text" placeholder="add new todo" />
+      <input id="submitBtn" type="submit" value="add" />
       <br></br>
-      <Filter selectedFilter={selectedFilter} setFilter={setFilter} />
+      <Filter filter={filter} setFilter={setFilter} />
     </div>
   );
 }
